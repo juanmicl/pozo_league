@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Breaches';
+    src: 
+         url('./assets/fonts/breaches.ttf') format('truetype');
+}
+
+.logo {
+    font-family: 'Breaches', sans-serif;
+}

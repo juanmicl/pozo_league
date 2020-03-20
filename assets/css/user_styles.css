@@ -1,0 +1,67 @@
+.normal {
+    color: #999 !important;
+}
+
+.vip {
+    color: #E140C7 !important;
+}
+
+.aqua {
+    color: #6991f7 !important;
+    text-shadow: 0.5px 0.5px 5px #6991f7;
+}
+
+.nova {
+    color: #d46709 !important;
+    text-shadow: 0.5px 0.5px 5px #d46709;
+}
+
+.contributor {
+    color: #ffdf00 !important;
+}
+
+.royal {
+    color: #99bedf !important;
+}
+
+.legendary {
+    color: #ffc000 !important;
+    text-shadow: 0px 0px 8px #fabc00;
+    background-image: url(https://i.imgur.com/ZN0C92G.gif);
+    background-repeat: repeat;
+}
+
+.supreme {
+    color: #54FF9F !important;
+    text-shadow: 1px 1px 10px #39c70d;
+    background: url(https://static.cracked.to/images/bg1.gif);
+}
+
+.insane {
+    color: #855dff !important;
+    text-shadow: 0px 0px 4px #770086;
+    background-image: url(https://static.nulled.to/public/assets/sparkling.gif);
+    background-repeat: repeat;
+}
+
+.multicolor {
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #FF512F !important;
+    font-weight: 700;
+    text-shadow: 0px 0px 5px #727309;
+    background-image: url(https://i.imgur.com/ZN0C92G.gif),linear-gradient(90deg,#f00 0%,#29ff00 100%,#fff);
+    animation: godlyanim 5s infinite linear;
+}
+
+.admin {
+    color: #ff3a3a !important;
+    text-shadow: 1px 1px 3px #000000;
+    font-weight: bold;
+}
+
+.moderator {
+    color: #2A9289 !important;
+    text-shadow: 1px #fff;
+}
