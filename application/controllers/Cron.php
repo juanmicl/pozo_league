@@ -12,7 +12,6 @@ class Cron extends CI_Controller {
 	function __construct()
     {
 		parent::__construct();
-
 		$this->lol_api = new LeagueAPI([
 			LeagueAPI::SET_KEY              => $this->config->item('lol_api_key'),
 			LeagueAPI::SET_TOURNAMENT_KEY   => "",
@@ -24,7 +23,6 @@ class Cron extends CI_Controller {
 			LeagueAPI::SET_CACHE_CALLS      => true,
 		]);
     }
-
 
 	public function players()
 	{

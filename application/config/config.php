@@ -44,7 +44,7 @@ $config['rcaptcha_public'] = '6LcshdIUAAAAAF1BZD5plUOtyrx3VmOgfVqWRR4-';
 $config['rcaptcha_secret'] = '6LcshdIUAAAAAFBc2NRvT_Klw4kRIUPsY74If5DK';
 
 // ======= LOL API KEYS ======= //
-$config['lol_api_key'] = 'RGAPI-c98d8c94-1337-4f5a-bdac-4ebfaf405848';
+$config['lol_api_key'] = 'RGAPI-5d2c4b7b-4395-4b7e-a378-e362b7482481';
 
 
 /*

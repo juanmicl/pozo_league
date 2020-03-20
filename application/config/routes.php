@@ -68,3 +68,6 @@ $route['admin/add_players'] = 'Players/add_players';
 
 // CRON
 $route['cron/players'] = 'cron/players';
+
+// API
+$route['api/matchmaking/generate'] = 'api/matchmaking';
