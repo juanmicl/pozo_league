@@ -31,17 +31,4 @@ new ClipboardJS('.btn');
         <p>No tienes cuenta? <a href="register" class="text-danger">Registrate aquí</a>
     </div>
 </div>
-<?php
-    if(!empty($error)){
-        echo '
-        <script type="text/javascript">
-            setTimeout(
-            function() {
-                swal("", "'.$error.'", "error");
-            },
-            100
-            );
-        </script>';
-    }
-?>
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>

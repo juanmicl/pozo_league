@@ -88,39 +88,40 @@ class Auth extends CI_Controller {
             {
                 // Check empty fields
                 if(empty($_POST['username']) || empty($_POST['email']) || empty($_POST['pass']) || empty($_POST['rpass'])){
-                    $data['error'] = "Please enter all fields";
+                    $data['error'] = "Completa todos los campos";
                 }
 
                 //Compare first to second password
                 if ($_POST['pass'] != $_POST['rpass']){
-                    $data['error'] = 'Passwords do not match';
+                    $data['error'] = 'Las contraseñas no coinciden';
                 }
 
                 // Check if the username is legit
-                if (!ctype_alnum($_POST['username']) || strlen($_POST['username']) < 4 || strlen($_POST['username']) > 15){
-                    $data['error'] = 'Username must be  alphanumberic and 4-15 characters in length';
+                if (!ctype_alnum($_POST['username']) || strlen($_POST['username']) < 4 || strlen($_POST['username']) > 25){
+                    $data['error'] = 'El nombre de usuario solo puede contener números y letras con una longitud de entre 4-25 caracteres';
                 }
 
                 // Validate email
                 if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
-                    $data['error'] = 'Email is not a valid email address';
+                    $data['error'] = 'Ingresa un email válido';
                 }
 
                 // Check username in db
-                if($this->Users_model->countUser($_POST['username']) > 0){
-                    $data['error'] = 'Username is already taken';
+                if ($this->Users_model->countUser($_POST['username']) > 0){
+                    $data['error'] = 'Este nombre de usuario ya está registrado';
                 }
 
                 // Check email in db
-                if($this->Users_model->countEmail($_POST['email']) > 0){
-                    $data['error'] = 'Email already registered';
+                if ($this->Users_model->countEmail($_POST['email']) > 0){
+                    $data['error'] = 'Este email ya está registrado';
                 }
 
                 // Register new user on db
-                if(empty($data['error'])){
+                if (empty($data['error'])) {
+                    var_dump($this->input->post());
                     $hash = password_hash($_POST['pass'], PASSWORD_BCRYPT);
-                    $this->Users_model->setUser(xss_clean($_POST['username']), $hash, xss_clean($_POST['email']));
-                    header('Location: /');
+                    $this->Users_model->setUser($this->input->post('username'), $hash, $this->input->post('email'));
+                    header('Location: /login');
                     exit;
                 }
             }

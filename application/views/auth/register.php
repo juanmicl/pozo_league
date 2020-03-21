@@ -35,19 +35,5 @@ new ClipboardJS('.btn');
             </div>
         </div>
     </div>
-    <?php
-    if(!empty($error)){
-        echo '
-        <script type="text/javascript">
-            setTimeout(
-            function() {
-                swal("", "'.$error.'", "error");
-            },
-            100
-            );
-        </script>
-        ';
-    }
-    ?>
 </div>
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
