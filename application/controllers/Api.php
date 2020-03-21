@@ -68,8 +68,12 @@ class Api extends CI_Controller {
 				} else {
 					$player_mmr = 800;
 				}
-				$players_full[$player->id]['winrate'] = round($player->wins/($player->wins+$player->loses), 1);
-				$player_elo = round($players_full[$player->id]['winrate'] * 0.65 + $player_mmr/2300 * 0.35, 4);
+				if ($player->wins == 0 && $player->loses == 0) {
+					$player_elo = round($player_mmr/2300, 4);
+				} else {
+					$players_full[$player->id]['winrate'] = round($player->wins/($player->wins+$player->loses), 1);
+					$player_elo = round($players_full[$player->id]['winrate'] * 0.65 + $player_mmr/2300 * 0.35, 4);
+				}
 				$perturbacion = (mt_rand(0, 1000) / 10000);
 				if ((bool)random_int(0, 1)) {
 					$players_full[$player->id]['elo'] = round($player_elo + $perturbacion, 4);

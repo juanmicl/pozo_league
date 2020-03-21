@@ -42,8 +42,6 @@ class Cron extends CI_Controller {
 					}
 				}
 
-				//echo(json_encode($leagues));
-				//echo('<br><br><br><br><br><br><br>');
 				if ($player->summoner_id != "") {
 					$this->Players_model->updatePlayer($player->id, $summoner->profileIconId, $summoner->summonerLevel, $ranked[0], $ranked[1]);
 				} else {

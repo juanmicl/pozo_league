@@ -8,7 +8,7 @@
                             identidad para poder inscribirte.</p>
                         <div class=" m-2">
                             <img class="rounded" width="20%" src="https://cdn.mobalytics.gg/stable/profileicon/<?=$verify_icon['id']?>.png">
-                            <p>1. Utiliza este icono en tu cuenta (luego te lo puedes cambiar).<br>2. Introduce tu nombre de invocador y dale a verificar.</p>
+                            <p>1. Utiliza este icono en tu cuenta (luego te lo puedes cambiar).<br>2. Introduce tu nombre de invocador <a class="text-danger">y espera unos minutos</a>.<br> 3. Dale a verificar.</p>
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
