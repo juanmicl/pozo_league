@@ -40,8 +40,8 @@ $config['index_page'] = 'index.php';
 ## CUSTOM CONFIG ##
 
 // ======= RECAPTCHA KEYS ======= //
-$config['rcaptcha_public'] = '6LcshdIUAAAAAF1BZD5plUOtyrx3VmOgfVqWRR4-';
-$config['rcaptcha_secret'] = '6LcshdIUAAAAAFBc2NRvT_Klw4kRIUPsY74If5DK';
+$config['rcaptcha_public'] = '6LfB3OIUAAAAAJ5iEUpb_X7ADYZHZIkks0f8RADY';
+$config['rcaptcha_secret'] = '6LfB3OIUAAAAAJghBMjXxgg2O0nPSyKkVZv3BcS-';
 
 // ======= LOL API KEYS ======= //
 $config['lol_api_key'] = 'RGAPI-5d2c4b7b-4395-4b7e-a378-e362b7482481';

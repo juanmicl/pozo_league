@@ -2,7 +2,6 @@
     <p><a class="text-danger" href="https://discord.gg/VuZca5C" target="_blank"><i class="fab fa-discord"></i> Discord</a></p>
 </footer>
 
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>

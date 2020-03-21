@@ -62,6 +62,8 @@ $route['logout'] = 'auth/logout';
 
 // PLAYERS
 $route['p/(:any)'] = 'players/profile/$1';
+$route['verificar'] = 'players/verify';
+$route['inscripcion'] = 'players/inscribe_today';
 
 // ADMIN
 $route['admin/add_players'] = 'Players/add_players';

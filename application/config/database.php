@@ -74,7 +74,7 @@ $active_group = 'pdo';
 $query_builder = TRUE;
 
 $db['pdo'] = array(
-	'dsn'	=> 'mysql:host=127.0.0.1;dbname=juicesmm_league;charset=utf8mb4',
+	'dsn'	=> 'mysql:host=185.2.103.2;dbname=juicesmm_league;charset=utf8mb4',
 	'hostname' => '',
 	'username' => 'juicesmm_league',
 	'password' => 'Cd_O^%DO@&_!',

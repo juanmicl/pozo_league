@@ -32,10 +32,11 @@ class Players_model extends CI_Model
         return $this->db->query($sql, [$name])->result()[0];
     }
 
-    public function setPlayer($name)
+    public function setPlayer($summoner_name)
     {   
-        $sql = "INSERT INTO `players` (`id`, `summoner_id`, `account_id`, `summoner_name`, `icon_id`, `level`, `league`, `rank`, `wins`, `loses`, `points`, `active`) VALUES (NULL, '', '', ?, 0, 0, '', '', 0, 0, 0, 1);";
-        return $this->db->query($sql, [$name]);
+        $sql = "INSERT INTO `players` (`id`, `summoner_id`, `account_id`, `summoner_name`, `icon_id`, `level`, `league`, `rank`, `wins`, `loses`, `points`, `active`) VALUES (NULL, '', '', ?, 0, 0, '', '', 0, 0, 0, 0);";
+        $this->db->query($sql, [$summoner_name]);
+        return $this->db->insert_id();
     }
 
     public function updatePlayer($id, $icon_id, $level, $league, $rank) {
@@ -46,6 +47,17 @@ class Players_model extends CI_Model
     public function updatePlayerFull($id, $summoner_id, $account_id, $icon_id, $level, $league, $rank) {
         $sql = "UPDATE `players` SET `summoner_id` = ?, `account_id` = ?, `icon_id` = ?, `level` = ?, `league` = ?, `rank` = ?, `checked` = current_timestamp() WHERE `players`.`id` = ?;";
         return $this->db->query($sql, [$summoner_id, $account_id, $icon_id, $level, $league, $rank, $id]);
+    }
+
+    public function getActive($id)
+    {
+        $sql = "SELECT active FROM players WHERE id = ?";
+        return $this->db->query($sql, [$id])->result()[0];
+    }
+
+    public function updateActive($id) {
+        $sql = "UPDATE `players` SET `active` = current_timestamp() WHERE id = ?;";
+        return $this->db->query($sql, [$id]);
     }
 
     public function countPlayers()

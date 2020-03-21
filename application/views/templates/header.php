@@ -9,24 +9,20 @@
     <meta name="theme-color" content="#222">
     <link rel="icon" type="image/png" href="https://i.imgur.com/hM7BZhL.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Courier+Prime&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" />
+
 
     <title>Pozo League - <?=strip_tags($title)?></title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/darkly/bootstrap.min.css" rel="stylesheet"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.15.2/bootstrap-table.min.css"
-        integrity="sha256-woxfrHkTslDazfXK6GYNSJneGZgNH3q2VzuDiyBaJcM=" crossorigin="anonymous" />
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/darkly/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" />
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="/assets/css/user_styles.css">
-    <link rel="stylesheet" href="/assets/css/custom.css">
+
+    <!-- JS -->
     <script type="text/javascript" src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 
     <?php
     if(!empty($error)){
@@ -49,27 +45,31 @@
         <ul class="navbar-nav mr-auto pl-1">
             <span style="font-size: 20px;">
                 <h4><a href="/" class="text-danger text-decoration-none">
-                <i class="fas fa-trophy text-warning"></i> Pozo League<a>
+                        <i class="fas fa-trophy text-warning"></i> Pozo League<a>
                 </h4>
             </span>
         </ul>
+        <a class="btn btn-secondary mr-2" href="/inscripcion">
+            <i class="fas fa-user-plus text-warning"></i> Inscribirme hoy
+        </a>
         <?php if ($loggedIn) { ?>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
                 <i class="fas fa-user"></i> <?=$user_data->username?>
             </button>
-            <div class="dropdown-menu">
-                <?php if ($is_admin) { ?>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <?php if($is_admin) { ?>
                 <!--<a class="dropdown-item" href="/orders">Users</a>-->
                 <?php } ?>
-                <a class="dropdown-item" href="/settings">Settings</a>
-                <a class="dropdown-item" href="/logout">Logout</a>
+                <a class="dropdown-item" href="/u/asdf">Perfil</a>
+                <!--<a class="dropdown-item" href="/settings">Ajustes</a>-->
+                <a class="dropdown-item" href="/logout">Cerrar sesión</a>
             </div>
         </div>
         <?php } else { ?>
-            <a class="btn btn-secondary" href="/login">
-                <i class="fas fa-sign-in-alt"></i> Login
-            </a>
+        <a class="btn btn-secondary" href="/login">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </a>
         <?php } ?>
     </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -95,7 +95,8 @@
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="busca un jugador">
-                    <a class="btn btn-secondary my-2 my-sm-0" onclick="swal('','Es broma, no funciona xD','error')">Buscar</a>
+                    <a class="btn btn-secondary my-2 my-sm-0"
+                        onclick="swal('','Es broma, no funciona xD','error')">Buscar</a>
                 </form>
             </div>
         </div>

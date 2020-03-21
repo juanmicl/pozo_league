@@ -1,10 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+// RITO API
+use RiotAPI\LeagueAPI\LeagueAPI;
+use RiotAPI\LeagueAPI\Definitions\Region;
+
 class Players extends CI_Controller {
+
+    private $lol_api;
 
 	function __construct()
     {
-		parent::__construct();
+        parent::__construct();
+        $this->lol_api = new LeagueAPI([
+			LeagueAPI::SET_KEY              => $this->config->item('lol_api_key'),
+			LeagueAPI::SET_TOURNAMENT_KEY   => "",
+			LeagueAPI::SET_REGION           => Region::EUROPE_WEST,
+			LeagueAPI::SET_VERIFY_SSL       => false,
+			LeagueAPI::SET_DATADRAGON_INIT  => true,
+			LeagueAPI::SET_INTERIM          => true,
+			LeagueAPI::SET_CACHE_RATELIMIT  => true,
+			LeagueAPI::SET_CACHE_CALLS      => true,
+        ]);
         $this->load->helper('session');
         $this->load->model('Users_model');
         $this->load->model('Players_model');
@@ -52,6 +69,88 @@ class Players extends CI_Controller {
         $this->load->view('players/add_players', $data);
         $this->load->view('templates/footer');
     }
+
+    public function verify($step = null)
+	{
+        checkToken();
+
+        $user_data = $this->Users_model->getUser($_COOKIE['token']);
+
+        if ($user_data->player_id != null) {
+            header('Location: /');
+            exit();
+        }
+
+		$data = [
+            'title' => 'Verificación',
+            'verify_icon' => ['id' => null, 'hash' => null],
+            'user_data' => $user_data,
+			'is_admin' => isAdmin(),
+            'loggedIn' => isLoggedIn(),
+            'error' => null
+        ];
+        
+        $data['verify_icon']['id'] = rand(0, 28);
+        $data['verify_icon']['hash'] = password_hash($data['user_data']->username."|".$data['verify_icon']['id'], PASSWORD_BCRYPT);
+
+        if ($this->input->post('summoner_name')) {
+            $player_icon = $this->lol_api->getSummonerByName($this->input->post('summoner_name'))->profileIconId;
+            if (password_verify($data['user_data']->username."|".$player_icon, $this->input->post('hash'))) {
+                if ($this->Players_model->countPlayer($this->input->post('summoner_name')) < 1) {
+                    $player_id = $this->Players_model->setPlayer($this->input->post('summoner_name'));
+                } else {
+                    $player_id = $this->Players_model->getPlayerByName($this->input->post('summoner_name'))->id;
+                }
+                $this->Users_model->setPlayerId($data['user_data']->id, $player_id);
+                //sweetAlert(['type' => 'sucess', 'msg' => 'Cuenta verificada, ya puedes inscribirte!'], $reload=false);
+                header('Location: /inscripcion');
+                exit();
+            } else {
+                $data['error'] = "El icono que tiene ".$this->input->post('summoner_name')." no corresponde con el que te pedimos.";
+            }
+        }
+
+		$this->load->view('templates/header', $data);
+        $this->load->view('players/verify', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function inscribe_today()
+	{
+        checkToken();
+
+        $user_data = $this->Users_model->getUser($_COOKIE['token']);
+
+        if ($user_data->player_id == null) {
+            header('Location: /verificar');
+            exit();
+        } else {
+            $player_data = $this->Users_model->getPlayer($user_data->id);
+        }
+
+		$data = [
+			'title' => 'Inscripción',
+            'user_data' => $user_data,
+            'player_data' => $player_data,
+            'player_active' => $this->check_same_day($player_data->active),
+			'is_admin' => isAdmin(),
+			'loggedIn' => isLoggedIn()
+        ];
+        
+        if ($this->input->post('cacadelavaca')) {
+            try {
+                $this->Players_model->updateActive($player_data->id);
+                header('Location: /');
+                exit();
+            } catch (Exception $e) {
+                $data['error'] = 'separalos por comas cabrón';
+            }
+        }
+
+		$this->load->view('templates/header', $data);
+        $this->load->view('players/inscribe', $data);
+        $this->load->view('templates/footer');
+    }
     
     public function profile($summoner_name = null)
 	{
@@ -83,5 +182,18 @@ class Players extends CI_Controller {
 		$this->load->view('templates/header', $data);
         $this->load->view('players/profile', $data);
         $this->load->view('templates/footer');
-	}
+    }
+    
+    private function check_same_day($datetime1) {
+        $date1 = new DateTime($datetime1);
+        $date2 = new DateTime('now');
+        $date1 = $date1->format('Ymd');
+        $date2 = $date2->format('Ymd');
+
+        if ($date1 == $date2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
