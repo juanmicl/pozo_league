@@ -14,23 +14,23 @@ new ClipboardJS('.btn');
             <div class="card-body">
                 <form name="reg" action="?" method="POST">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
+                        <label for="exampleInputEmail1">Usuario</label>
                         <input type="text" class="form-control" name="username" placeholder="Username" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
+                        <label for="exampleInputEmail1">Email</label>
                         <input type="email" class="form-control" name="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Password</label>
-                        <input type="password" class="form-control" name="pass" placeholder="Password" required>
-                        <input type="password" class="form-control" name="rpass" placeholder="Password" required>
+                        <label for="exampleInputEmail1">Contraseña</label>
+                        <input type="password" class="form-control" name="pass" placeholder="Contraseña" required>
+                        <input type="password" class="form-control" name="rpass" placeholder="Repetir contraseña" required>
                     </div>
                     <div class="form-group">
                         <div id="g-recaptcha"></div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block mt-2"
-                        name="register">REGISTER</button>
+                        name="register">Registrar</button>
                 </form>
             </div>
         </div>

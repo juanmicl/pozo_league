@@ -39,7 +39,7 @@ class Users_model extends CI_Model
 
     public function setUser($username, $hash, $email)
     {
-        $sql = "INSERT INTO `users` (`id`, `username`, `password`, `email`, `rank`, `token`, `points`, `telegram`, `avatar`, `style_name`) VALUES (NULL, ?, ?, ?, '0', '0', '0', '', '', '');";
+        $sql = "INSERT INTO `users` (`id`, `username`, `password`, `email`, `rank`, `token`, `points`, `discord`, `avatar`, `style_name`) VALUES (NULL, ?, ?, ?, '0', '0', '0', '', '', '');";
         return $this->db->query($sql, [$username, $hash, $email]);
     }
 
