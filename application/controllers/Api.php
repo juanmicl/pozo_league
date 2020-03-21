@@ -59,6 +59,9 @@ class Api extends CI_Controller {
 			$players_full = [];
 
 			foreach ($players as $player) {
+				if (!$this->check_same_day($player->active)) {
+					continue;
+				}
 				$players_full[$player->id]['id'] = $player->id;
 				$players_full[$player->id]['summoner_name'] = $player->summoner_name;
 				$players_full[$player->id]['league'] = $player->league;
@@ -109,4 +112,17 @@ class Api extends CI_Controller {
 		}
 		echo(json_encode($matchmaking, JSON_UNESCAPED_UNICODE));
 	}
+
+	private function check_same_day($datetime1) {
+        $date1 = new DateTime($datetime1);
+        $date2 = new DateTime('now');
+        $date1 = $date1->format('Ymd');
+        $date2 = $date2->format('Ymd');
+
+        if ($date1 == $date2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
