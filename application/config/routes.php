@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'main/home';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = TRUE;
 
 $route['terms'] = 'dashboard/terms';
 
@@ -62,11 +62,12 @@ $route['logout'] = 'auth/logout';
 
 // PLAYERS
 $route['p/(:any)'] = 'players/profile/$1';
+$route['lista-inscritos'] = 'players/active_list';
 $route['verificar'] = 'players/verify';
 $route['inscripcion'] = 'players/inscribe_today';
 
 // ADMIN
-$route['admin/add_players'] = 'Players/add_players';
+$route['admin/add-players'] = 'Players/add_players';
 
 // CRON
 $route['cron/players'] = 'cron/players';

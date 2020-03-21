@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,7 +8,6 @@
     <meta name="theme-color" content="#222">
     <link rel="icon" type="image/png" href="https://i.imgur.com/hM7BZhL.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" crossorigin="anonymous">
-
 
     <title>Pozo League - <?=strip_tags($title)?></title>
 
@@ -46,8 +44,8 @@
         <ul class="navbar-nav mr-auto pl-1">
             <span style="font-size: 20px;">
                 <h4><a href="/" class="text-danger text-decoration-none">
-                        <i class="fas fa-trophy text-warning"></i> Pozo League<a>
-                </h4>
+                    <i class="fas fa-trophy text-warning"></i> Pozo League
+                <a></h4>
             </span>
         </ul>
         <a class="btn btn-secondary mr-2" href="/inscripcion">
@@ -60,7 +58,9 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <?php if($is_admin) { ?>
-                <!--<a class="dropdown-item" href="/orders">Users</a>-->
+                <a class="dropdown-item" href="/admin/add-players">Generar Partidas</a>
+                <a class="dropdown-item" href="/admin/add-players">Añadir Jugadores</a>
+                <div class="dropdown-divider"></div>
                 <?php } ?>
                 <!--<a class="dropdown-item" href="/p/<?=$user_data->username?>">Perfil</a>-->
                 <!--<a class="dropdown-item" href="/settings">Ajustes</a>-->
@@ -85,14 +85,14 @@
                         <a class="nav-link" href="/"><i class="fas fa-tachometer-alt"></i> Dashboard <span class="sr-only">(current)</span></a>
                     </li>-->
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-users"></i> Jugadores</a>
+                        <a class="nav-link" href="/"><i class="fas fa-users"></i> Jugadores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-align-justify"></i> Partidas</a>
+                        <a class="nav-link" href="/lista-inscritos"><i class="fas fa-align-justify"></i> Lista Inscritos</a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link" href="#"><i class="far fa-calendar-alt"></i> Jornadas</a>
-                    </li>
+                    </li>-->
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="busca un jugador">

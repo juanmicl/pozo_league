@@ -29,7 +29,6 @@ class Players extends CI_Controller {
 
 	public function add_players()
 	{
-		checkAlert();
         checkToken();
         
         if (!isAdmin()) {
@@ -155,6 +154,39 @@ class Players extends CI_Controller {
         $this->load->view('players/inscribe', $data);
         $this->load->view('templates/footer');
     }
+
+    public function active_list()
+	{
+		$this->load->model('Players_model');
+		if (isLoggedIn()) {
+			$user_data = $this->Users_model->getUser($_COOKIE['token']);
+			$is_admin = isAdmin();
+		} else {
+			$user_data = null;
+			$is_admin = false;
+        }
+
+        $players = $this->Players_model->getPlayers();
+        $active_players = [];
+        
+        foreach ($players as $player) {
+            if ($this->check_same_day($player->active)) {
+                array_push($active_players, $player);
+            }
+        }
+
+		$data = [
+			'title' => count($active_players).' Inscritos',
+			'user_data' => $user_data,
+			'is_admin' => $is_admin,
+			'loggedIn' => isLoggedIn(),
+			'players' => $active_players
+		];
+
+		$this->load->view('templates/header', $data);
+        $this->load->view('players/active_list', $data);
+        $this->load->view('templates/footer');
+	}
     
     public function profile($summoner_name = null)
 	{
