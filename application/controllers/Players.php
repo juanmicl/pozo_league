@@ -94,19 +94,23 @@ class Players extends CI_Controller {
         $data['verify_icon']['hash'] = password_hash($data['user_data']->username."|".$data['verify_icon']['id'], PASSWORD_BCRYPT);
 
         if ($this->input->post('summoner_name')) {
-            $player_icon = $this->lol_api->getSummonerByName($this->input->post('summoner_name'))->profileIconId;
-            if (password_verify($data['user_data']->username."|".$player_icon, $this->input->post('hash'))) {
-                if ($this->Players_model->countPlayer($this->input->post('summoner_name')) < 1) {
-                    $player_id = $this->Players_model->setPlayer($this->input->post('summoner_name'));
+            try {
+                $player_icon = $this->lol_api->getSummonerByName(strtolower($this->input->post('summoner_name')))->profileIconId;
+                if (password_verify($data['user_data']->username."|".$player_icon, $this->input->post('hash'))) {
+                    if ($this->Players_model->countPlayer($this->input->post('summoner_name')) < 1) {
+                        $player_id = $this->Players_model->setPlayer($this->input->post('summoner_name'));
+                    } else {
+                        $player_id = $this->Players_model->getPlayerByName($this->input->post('summoner_name'))->id;
+                    }
+                    $this->Users_model->setPlayerId($data['user_data']->id, $player_id);
+                    //sweetAlert(['type' => 'sucess', 'msg' => 'Cuenta verificada, ya puedes inscribirte!'], $reload=false);
+                    header('Location: /inscripcion');
+                    exit();
                 } else {
-                    $player_id = $this->Players_model->getPlayerByName($this->input->post('summoner_name'))->id;
+                    $data['error'] = "El icono que tiene ".$this->input->post('summoner_name')." no corresponde con el que te pedimos.";
                 }
-                $this->Users_model->setPlayerId($data['user_data']->id, $player_id);
-                //sweetAlert(['type' => 'sucess', 'msg' => 'Cuenta verificada, ya puedes inscribirte!'], $reload=false);
-                header('Location: /inscripcion');
-                exit();
-            } else {
-                $data['error'] = "El icono que tiene ".$this->input->post('summoner_name')." no corresponde con el que te pedimos.";
+            } catch (Exception $e) {
+                $data['error'] = 'Este nombre de invocador no existe';
             }
         }
 
