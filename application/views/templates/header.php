@@ -61,7 +61,7 @@
                 <?php if($is_admin) { ?>
                 <!--<a class="dropdown-item" href="/orders">Users</a>-->
                 <?php } ?>
-                <a class="dropdown-item" href="/u/asdf">Perfil</a>
+                <a class="dropdown-item" href="/u/<?=$user_data->username?>">Perfil</a>
                 <!--<a class="dropdown-item" href="/settings">Ajustes</a>-->
                 <a class="dropdown-item" href="/logout">Cerrar sesión</a>
             </div>
