@@ -74,3 +74,4 @@ $route['cron/players'] = 'cron/players';
 
 // API
 $route['api/matchmaking/generate'] = 'api/matchmaking';
+$route['api/test'] = 'api/test';

@@ -1,11 +1,28 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// RITO API
+use RiotAPI\LeagueAPI\LeagueAPI;
+use RiotAPI\LeagueAPI\Definitions\Region;
+use RiotAPI\LeagueAPI\Objects\ProviderRegistrationParameters;
+use RiotAPI\LeagueAPI\Objects\TournamentRegistrationParameters;
+use RiotAPI\LeagueAPI\Objects\TournamentCodeParameters;
+
 class Api extends CI_Controller {
 
 	function __construct()
     {
 		parent::__construct();
+		$this->lol_api = new LeagueAPI([
+			LeagueAPI::SET_KEY              => $this->config->item('lol_api_key'),
+			LeagueAPI::SET_TOURNAMENT_KEY   => "RGAPI-5d2c4b7b-4395-4b7e-a378-e362b7482481",
+			LeagueAPI::SET_REGION           => Region::EUROPE_WEST,
+			LeagueAPI::SET_VERIFY_SSL       => false,
+			LeagueAPI::SET_DATADRAGON_INIT  => true,
+			LeagueAPI::SET_INTERIM          => true,
+			LeagueAPI::SET_CACHE_RATELIMIT  => true,
+			LeagueAPI::SET_CACHE_CALLS      => false,
+        ]);
 		$this->load->model('Players_model');
 	}
 	
@@ -88,10 +105,10 @@ class Api extends CI_Controller {
 			usort($players_full, function($a, $b) {
 				return $a['elo'] <=> $b['elo'];
 			});
-
 			$direction = 1;
 			$suma = 0;
-			for($t=0; $t < floor(count($players_full)/5); $t++) {
+			$n_teams = floor(count($players_full)/5);
+			for($t=0; $t < $n_teams; $t++) {
 				for ($i=0; $i < 5; $i++) { 
 					if ($direction === 1) {
 						$player = array_pop($players_full);
@@ -106,11 +123,47 @@ class Api extends CI_Controller {
 				array_push($medias, round($suma/5, 4));
 				$suma = 0;
 			}
-			if ((max($medias) - min($medias)) < 0.10) {
+			if ((max($medias) - min($medias)) < 0.07) {
 				break;
 			}
 		}
-		echo(json_encode($matchmaking, JSON_UNESCAPED_UNICODE));
+		//echo(json_encode($matchmaking, JSON_UNESCAPED_UNICODE));
+		$n = 1;
+		foreach ($matchmaking as $team) {
+			echo('<h2>EQUIPO '.$n.'</h2><br>');
+			foreach ($team as $player) {
+				echo('- '.$player['summoner_name'].'<br>');
+			}
+			$n += 1;
+		}
+	}
+
+	public function test () {
+		$provider = new ProviderRegistrationParameters(
+			['region' => Region::EUROPE_WEST,
+			'url' => 'http://pozoleague.ml/callback/matches'
+		]);
+		$provider_id = $this->lol_api->createTournamentProvider($provider);
+		
+		var_dump($provider_id);
+
+		$tournament = new TournamentRegistrationParameters([
+			'providerId' => $provider_id,
+			'name' => 'jornada 1'
+		]);
+		$tournament_id = $this->lol_api->createTournament($tournament);
+
+		echo('Tournament ID: '.$tournament_id);
+		$codes_params = new TournamentCodeParameters([
+			//'allowedSummonerIds' => [ "...", ... ],
+			'mapType'       => 'SUMMONERS_RIFT',
+			'pickType'      => 'TOURNAMENT_DRAFT',
+			'spectatorType' => 'LOBBYONLY',
+			'teamSize'      => 5,
+		]);
+		$codes = $this->lol_api->createTournamentCodes($tournament_id, 2, $codes_params);
+		var_dump($codes);
+
 	}
 
 	private function check_same_day($datetime1) {
