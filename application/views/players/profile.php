@@ -5,7 +5,7 @@
                 <div class="card-body text-center">
                     <div class="row">
                         <div class="col-3">
-                            <img src="https://cdn.mobalytics.gg/stable/profileicon/<?=$player_data->icon_id?>.png"
+                            <img src="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/<?=$player_data->icon_id?>.png"
                                 style="width: 10vw;height: 10vw; border-radius: 50%;" alt="icon">
                             <h4 class="mt-2">Nivel: <a class="text-warning"><?=$player_data->level?></a></h4>
                         </div>

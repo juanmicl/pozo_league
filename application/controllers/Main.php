@@ -28,9 +28,10 @@ class Main extends CI_Controller {
 	public function home()
 	{
 		checkAlert();
+		$is_logged_in = isLoggedIn();
 
 		$this->load->model('Players_model');
-		if (isLoggedIn()) {
+		if ($is_logged_in) {
 			$user_data = $this->Users_model->getUser($_COOKIE['token']);
 			$is_admin = isAdmin();
 		} else {
@@ -42,7 +43,7 @@ class Main extends CI_Controller {
 			'title' => '<i class="fas fa-trophy text-warning"></i> Ranking',
 			'user_data' => $user_data,
 			'is_admin' => $is_admin,
-			'loggedIn' => isLoggedIn(),
+			'loggedIn' => $is_logged_in,
 			'players' => $this->Players_model->getPlayers()
 		];
 
@@ -54,7 +55,6 @@ class Main extends CI_Controller {
 	public function settings()
 	{
 		checkToken();
-		checkAlert();
 
 		$data = [
 			'title' => 'Settings',

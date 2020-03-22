@@ -49,6 +49,11 @@ class Players_model extends CI_Model
         return $this->db->query($sql, [$summoner_id, $account_id, $icon_id, $level, $league, $rank, $id]);
     }
 
+    public function updatePoints($id, $points) {
+        $sql = "UPDATE `players` SET `points` = ? WHERE id = ?;";
+        return $this->db->query($sql, [$points, $id]);
+    }
+
     public function getActive($id)
     {
         $sql = "SELECT active FROM players WHERE id = ?";

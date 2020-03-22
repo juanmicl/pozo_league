@@ -1,11 +1,16 @@
 <?php
 
-// Get real visitor IP behind CloudFlare network
+// Check if user is logged in
 if (!function_exists('isLoggedIn'))
 {
     function isLoggedIn()
     {
-        if (isset($_COOKIE['token'])){
+        $CI = get_instance();
+        $CI->load->model('Users_model');
+        if (isset($_COOKIE['token'])) {
+            if ($CI->Users_model->countToken($_COOKIE['token']) < 1) {
+                return false;
+            }
             return true;
         } else {
             return false;
@@ -17,16 +22,9 @@ if (!function_exists('checkToken'))
 {
     function checkToken()
     {
-        $CI = get_instance();
-        $CI->load->model('Users_model');
-        if (isLoggedIn()){
-            if ($CI->Users_model->countToken($_COOKIE['token']) < 1) {
-                header('Location: /logout');
-                exit;
-            }
-        } else {
+        if (!isLoggedIn()) {
             header('Location: /login');
-            exit;
+            exit();
         }
     }
 }

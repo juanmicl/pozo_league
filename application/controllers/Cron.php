@@ -47,6 +47,9 @@ class Cron extends CI_Controller {
 				} else {
 					$this->Players_model->updatePlayerFull($player->id, $summoner->id, $summoner->accountId ,$summoner->profileIconId, $summoner->summonerLevel, $ranked[0], $ranked[1]);
 				}
+
+				$player_points = ($player->wins*3)+($player->loses);
+				$this->Players_model->updatePoints($player->id, $player_points);
 			} catch (Exception $e) {
 				echo 'caca: '.$player->summoner_name.'<br>';
 			}

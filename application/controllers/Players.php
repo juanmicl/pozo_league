@@ -157,8 +157,9 @@ class Players extends CI_Controller {
 
     public function active_list()
 	{
-		$this->load->model('Players_model');
-		if (isLoggedIn()) {
+        $this->load->model('Players_model');
+        $is_logged_in = isLoggedIn();
+		if ($is_logged_in) {
 			$user_data = $this->Users_model->getUser($_COOKIE['token']);
 			$is_admin = isAdmin();
 		} else {
@@ -179,7 +180,7 @@ class Players extends CI_Controller {
 			'title' => count($active_players).' Inscritos',
 			'user_data' => $user_data,
 			'is_admin' => $is_admin,
-			'loggedIn' => isLoggedIn(),
+			'loggedIn' => $is_logged_in,
 			'players' => $active_players
 		];
 

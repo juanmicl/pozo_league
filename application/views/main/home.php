@@ -14,7 +14,7 @@
             <?php foreach ($players as $player) { ?>
             <tr>
                 <td>
-                    <img src="https://cdn.mobalytics.gg/stable/profileicon/<?=$player->icon_id?>.png" width="35px"
+                    <img src="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/<?=$player->icon_id?>.png" width="35px"
                         class="rounded">
                 </td>
                 <td class="text-center">

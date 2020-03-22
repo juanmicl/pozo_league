@@ -16,8 +16,8 @@ class Auth extends CI_Controller {
 	public function login()
 	{
         if(isLoggedIn()){
-            header('Location: /dashboard');
-            exit;
+            header('Location: /');
+            exit();
         }
 
         $data = [
