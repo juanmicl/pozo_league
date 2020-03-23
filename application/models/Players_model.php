@@ -7,17 +7,10 @@ class Players_model extends CI_Model
         parent::__construct();
     }
 
-    public function getSummoners($limit = null, $offset = null)
+    public function getPlayer($id)
     {
-        if ($limit != null && $offset = null) {
-            $sql = "SELECT * FROM `summoners` ORDER BY points ASC LIMIT ? OFFSET ?";
-            return $this->db->query($sql, [$limit, $offset])->result();
-        } else if ($limit != null) {
-            $sql = "SELECT * FROM `summoners` ORDER BY checked ASC LIMIT ?";
-            return $this->db->query($sql, [$limit])->result();
-        } else {
-            return $this->db->query("SELECT * FROM `summoners` ORDER BY points DESC")->result();
-        }
+        $sql = "SELECT players.*, summoners.summoner_name FROM `players` INNER JOIN summoners ON players.summoner_id = summoners.id  WHERE players.id = ?";
+        return $this->db->query($sql, [$id])->result();
     }
 
     public function setPlayer($match_id, $summoner_id, $data)

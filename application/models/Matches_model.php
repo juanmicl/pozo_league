@@ -10,13 +10,13 @@ class Matches_model extends CI_Model
     public function getMatches($limit = null, $offset = null)
     {
         if ($limit != null && $offset = null) {
-            $sql = "SELECT * FROM `summoners` ORDER BY points ASC LIMIT ? OFFSET ?";
+            $sql = "SELECT matches.*, players.*, summoners.summoner_name FROM `matches` INNER JOIN players ON players.match_id = matches.id INNER JOIN summoners ON players.summoner_id = summoners.id ORDER BY matches.date DESC LIMIT ? OFFSET ?";
             return $this->db->query($sql, [$limit, $offset])->result();
         } else if ($limit != null) {
-            $sql = "SELECT * FROM `summoners` ORDER BY checked ASC LIMIT ?";
+            $sql = "SELECT matches.*, players.*, summoners.summoner_name FROM `matches` INNER JOIN players ON players.match_id = matches.id INNER JOIN summoners ON players.summoner_id = summoners.id ORDER BY matches.date DESC LIMIT ?";
             return $this->db->query($sql, [$limit])->result();
         } else {
-            return $this->db->query("SELECT * FROM `summoners` ORDER BY points DESC")->result();
+            return $this->db->query("SELECT * FROM `matches` ORDER BY `date` DESC")->result();
         }
     }
 
@@ -28,7 +28,7 @@ class Matches_model extends CI_Model
 
     public function setMatch($game_id, $game_duration, $game_mode, $game_type, $game_version, $map_id, $bans, $date)
     {   
-        $sql = "INSERT INTO `matches` (`id`, `game_id`, `game_duration`, `game_mode`, `game_type`, `game_version`, `map_id`, `ban01_id`, `ban02_id`, `ban03_id`, `ban04_id`, `ban05_id`, `ban06_id`, `ban07_id`, `ban08_id`, `ban09_id`, `ban010_id`, `date`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        $sql = "INSERT INTO `matches` (`id`, `game_id`, `game_duration`, `game_mode`, `game_type`, `game_version`, `map_id`, `ban01_id`, `ban02_id`, `ban03_id`, `ban04_id`, `ban05_id`, `ban06_id`, `ban07_id`, `ban08_id`, `ban09_id`, `ban10_id`, `date`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         $this->db->query($sql, [$game_id, $game_duration, $game_mode, $game_type, $game_version, $map_id, $bans[0], $bans[1], $bans[2], $bans[3], $bans[4], $bans[5], $bans[6], $bans[7], $bans[8], $bans[9], $date]);
         return $this->db->insert_id();
     }

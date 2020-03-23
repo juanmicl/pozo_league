@@ -123,7 +123,7 @@ class Api extends CI_Controller {
 				array_push($medias, round($suma/5, 4));
 				$suma = 0;
 			}
-			if ((max($medias) - min($medias)) < 0.07) {
+			if ((max($medias) - min($medias)) < 0.06) {
 				break;
 			}
 		}

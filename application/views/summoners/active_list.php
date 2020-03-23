@@ -14,7 +14,7 @@
             <?php foreach ($summoners as $summoner) { ?>
             <tr>
                 <td>
-                    <img src="https://cdn.mobalytics.gg/stable/profileicon/<?=$summoner->icon_id?>.png" width="35px"
+                    <img src="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/<?=$summoner->icon_id?>.png" width="35px"
                         class="rounded">
                 </td>
                 <td class="text-center">

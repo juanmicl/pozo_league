@@ -66,6 +66,9 @@ $route['lista-inscritos'] = 'summoners/active_list';
 $route['verificar'] = 'summoners/verify';
 $route['inscripcion'] = 'summoners/inscribe_today';
 
+// MATCHES
+$route['partidas'] = 'matches/matches';
+
 // ADMIN
 $route['admin/add-summoners'] = 'summoners/add_summoners';
 
