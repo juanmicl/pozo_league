@@ -143,10 +143,10 @@ class Summoners extends CI_Controller {
         if ($this->input->post('cacadelavaca')) {
             try {
                 $this->Summoners_model->updateActive($summoner_data->id);
-                header('Location: /');
+                header('Location: /lista-inscritos');
                 exit();
             } catch (Exception $e) {
-                $data['error'] = 'separalos por comas cabrón';
+                $data['error'] = 'Error al inscribirse, intentalo de nuevo';
             }
         }
 

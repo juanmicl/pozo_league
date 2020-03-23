@@ -75,3 +75,6 @@ $route['cron/summoners'] = 'cron/summoners';
 // API
 $route['api/matchmaking/generate'] = 'api/matchmaking';
 $route['api/test'] = 'api/test';
+
+// CALLBACK
+$route['callback/custom-games'] = 'callback/custom_games';
