@@ -2,6 +2,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>#</th>
                 <th></th>
                 <th>SoloQ</th>
                 <th>Nombre</th>
@@ -11,8 +12,11 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($summoners as $summoner) { ?>
+            <?php foreach ($summoners as $key => $summoner) { ?>
             <tr>
+                <td>
+                    <h4><?=$key+1?></h4>
+                </td>
                 <td>
                     <img src="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/<?=$summoner->icon_id?>.png" width="35px"
                         class="rounded">

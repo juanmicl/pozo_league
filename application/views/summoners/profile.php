@@ -4,15 +4,15 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-md-3">
                             <img src="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/<?=$summoner_data->icon_id?>.png"
-                                style="width: 10vw;height: 10vw; border-radius: 50%;" alt="icon">
+                                style="width: 125px;height: 125px; border-radius: 50%;" alt="icon">
                             <h4 class="mt-2">Nivel: <a class="text-warning"><?=$summoner_data->level?></a></h4>
                         </div>
-                        <div class="col-3">
+                        <div class="col-md-3">
                             <?php if ($summoner_data->league != "") { ?>
                             <img src="/assets/img/ranked/<?=strtolower($summoner_data->league)?>.png"
-                                style="width: 10vw;height: 10vw;">
+                                style="width: 125px;height: 125px;">
                             <h4 class="mt-2"><a
                                     class="text-warning"><?=$summoner_data->league." ".$summoner_data->rank?></a></h4>
                             <?php } else { ?>
