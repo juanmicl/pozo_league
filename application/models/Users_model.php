@@ -55,16 +55,16 @@ class Users_model extends CI_Model
         return $this->db->query($sql, [$id])->row()->n;
     }
 
-    public function getPlayer($id)
+    public function getSummoner($id)
     {
-        $sql = "SELECT players.* FROM users INNER JOIN players ON players.id = users.player_id WHERE users.id = ?";
+        $sql = "SELECT summoners.* FROM users INNER JOIN summoners ON summoners.id = users.summoner_id WHERE users.id = ?";
         return $this->db->query($sql, [$id])->result()[0];
     }
 
-    public function setPlayerId($id, $player_id)
+    public function setSummonerId($id, $summoner_id)
     {
-        $sql = "UPDATE `users` SET `player_id` = ? WHERE `id` = ?";
-        return $this->db->query($sql, [$player_id, $id]);
+        $sql = "UPDATE `users` SET `summoner_id` = ? WHERE `id` = ?";
+        return $this->db->query($sql, [$summoner_id, $id]);
     }
 
     public function getPoints($id)

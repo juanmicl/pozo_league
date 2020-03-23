@@ -58,8 +58,8 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <?php if($is_admin) { ?>
-                <a class="dropdown-item" href="/admin/add-players">Generar Partidas</a>
-                <a class="dropdown-item" href="/admin/add-players">Añadir Jugadores</a>
+                <a class="dropdown-item" href="/admin/add-summoners">Generar Partidas</a>
+                <a class="dropdown-item" href="/admin/add-summoners">Añadir Jugadores</a>
                 <div class="dropdown-divider"></div>
                 <?php } ?>
                 <!--<a class="dropdown-item" href="/p/<?=$user_data->username?>">Perfil</a>-->

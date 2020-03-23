@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 use RiotAPI\LeagueAPI\LeagueAPI;
 use RiotAPI\LeagueAPI\Definitions\Region;
 
-class Players extends CI_Controller {
+class Summoners extends CI_Controller {
 
     private $lol_api;
 
@@ -24,10 +24,10 @@ class Players extends CI_Controller {
         ]);
         $this->load->helper('session');
         $this->load->model('Users_model');
-        $this->load->model('Players_model');
+        $this->load->model('Summoners_model');
     }
 
-	public function add_players()
+	public function add_summoners()
 	{
         checkToken();
         
@@ -51,11 +51,11 @@ class Players extends CI_Controller {
 			'loggedIn' => isLoggedIn()
         ];
         
-        if ($this->input->post('players')) {
+        if ($this->input->post('summoners')) {
             try {
-                $players = explode(',', $this->input->post('players'));
-                foreach ($players as $player) {
-                    $this->Players_model->setPlayer($player);
+                $summoners = explode(',', $this->input->post('summoners'));
+                foreach ($summoners as $summoner) {
+                    $this->Summoners_model->setSummoner($summoner);
                 }
                 header('Location: /');
                 exit;
@@ -65,7 +65,7 @@ class Players extends CI_Controller {
         }
 
 		$this->load->view('templates/header', $data);
-        $this->load->view('players/add_players', $data);
+        $this->load->view('summoners/add_summoners', $data);
         $this->load->view('templates/footer');
     }
 
@@ -75,7 +75,7 @@ class Players extends CI_Controller {
 
         $user_data = $this->Users_model->getUser($_COOKIE['token']);
 
-        if ($user_data->player_id != null) {
+        if ($user_data->summoner_id != null) {
             header('Location: /');
             exit();
         }
@@ -94,14 +94,14 @@ class Players extends CI_Controller {
 
         if ($this->input->post('summoner_name')) {
             try {
-                $player_icon = $this->lol_api->getSummonerByName(strtolower($this->input->post('summoner_name')))->profileIconId;
-                if (password_verify($data['user_data']->username."|".$player_icon, $this->input->post('hash'))) {
-                    if ($this->Players_model->countPlayer($this->input->post('summoner_name')) < 1) {
-                        $player_id = $this->Players_model->setPlayer($this->input->post('summoner_name'));
+                $summoner_icon = $this->lol_api->getSummonerByName(strtolower($this->input->post('summoner_name')))->profileIconId;
+                if (password_verify($data['user_data']->username."|".$summoner_icon, $this->input->post('hash'))) {
+                    if ($this->Summoners_model->countSummoner($this->input->post('summoner_name')) < 1) {
+                        $summoner_id = $this->Summoners_model->setSummoner($this->input->post('summoner_name'));
                     } else {
-                        $player_id = $this->Players_model->getPlayerByName($this->input->post('summoner_name'))->id;
+                        $summoner_id = $this->Summoners_model->getSummonerByName($this->input->post('summoner_name'))->id;
                     }
-                    $this->Users_model->setPlayerId($data['user_data']->id, $player_id);
+                    $this->Users_model->setSummonerId($data['user_data']->id, $summoner_id);
                     //sweetAlert(['type' => 'sucess', 'msg' => 'Cuenta verificada, ya puedes inscribirte!'], $reload=false);
                     header('Location: /inscripcion');
                     exit();
@@ -114,7 +114,7 @@ class Players extends CI_Controller {
         }
 
 		$this->load->view('templates/header', $data);
-        $this->load->view('players/verify', $data);
+        $this->load->view('summoners/verify', $data);
         $this->load->view('templates/footer');
     }
 
@@ -124,25 +124,25 @@ class Players extends CI_Controller {
 
         $user_data = $this->Users_model->getUser($_COOKIE['token']);
 
-        if ($user_data->player_id == null) {
+        if ($user_data->summoner_id == null) {
             header('Location: /verificar');
             exit();
         } else {
-            $player_data = $this->Users_model->getPlayer($user_data->id);
+            $summoner_data = $this->Users_model->getSummoner($user_data->id);
         }
 
 		$data = [
 			'title' => 'Inscripción',
             'user_data' => $user_data,
-            'player_data' => $player_data,
-            'player_active' => $this->check_same_day($player_data->active),
+            'summoner_data' => $summoner_data,
+            'summoner_active' => $this->check_same_day($summoner_data->active),
 			'is_admin' => isAdmin(),
 			'loggedIn' => isLoggedIn()
         ];
         
         if ($this->input->post('cacadelavaca')) {
             try {
-                $this->Players_model->updateActive($player_data->id);
+                $this->Summoners_model->updateActive($summoner_data->id);
                 header('Location: /');
                 exit();
             } catch (Exception $e) {
@@ -151,13 +151,13 @@ class Players extends CI_Controller {
         }
 
 		$this->load->view('templates/header', $data);
-        $this->load->view('players/inscribe', $data);
+        $this->load->view('summoners/inscribe', $data);
         $this->load->view('templates/footer');
     }
 
     public function active_list()
 	{
-        $this->load->model('Players_model');
+        $this->load->model('Summoners_model');
         $is_logged_in = isLoggedIn();
 		if ($is_logged_in) {
 			$user_data = $this->Users_model->getUser($_COOKIE['token']);
@@ -167,25 +167,25 @@ class Players extends CI_Controller {
 			$is_admin = false;
         }
 
-        $players = $this->Players_model->getPlayers();
-        $active_players = [];
+        $summoners = $this->Summoners_model->getSummoners();
+        $active_summoners = [];
         
-        foreach ($players as $player) {
-            if ($this->check_same_day($player->active)) {
-                array_push($active_players, $player);
+        foreach ($summoners as $summoner) {
+            if ($this->check_same_day($summoner->active)) {
+                array_push($active_summoners, $summoner);
             }
         }
 
 		$data = [
-			'title' => count($active_players).' Inscritos',
+			'title' => count($active_summoners).' Inscritos',
 			'user_data' => $user_data,
 			'is_admin' => $is_admin,
 			'loggedIn' => $is_logged_in,
-			'players' => $active_players
+			'summoners' => $active_summoners
 		];
 
 		$this->load->view('templates/header', $data);
-        $this->load->view('players/active_list', $data);
+        $this->load->view('summoners/active_list', $data);
         $this->load->view('templates/footer');
 	}
     
@@ -193,12 +193,12 @@ class Players extends CI_Controller {
 	{
         $summoner_name = urldecode($summoner_name);
 
-		if ($this->Players_model->countPlayer($summoner_name) == 0) {
+		if ($this->Summoners_model->countSummoner($summoner_name) == 0) {
 			header('Location: /404');
             exit();
 		}
 
-        $player_data = $this->Players_model->getPlayerByName($summoner_name);
+        $summoner_data = $this->Summoners_model->getSummonerByName($summoner_name);
         
         if (isLoggedIn()) {
 			$user_data = $this->Users_model->getUser($_COOKIE['token']);
@@ -211,13 +211,13 @@ class Players extends CI_Controller {
 		$data = [
 			'title' => $summoner_name,
             'user_data' => $user_data,
-            'player_data' => $player_data,
+            'summoner_data' => $summoner_data,
 			'is_admin' => $is_admin,
 			'loggedIn' => isLoggedIn()
         ];
 		
 		$this->load->view('templates/header', $data);
-        $this->load->view('players/profile', $data);
+        $this->load->view('summoners/profile', $data);
         $this->load->view('templates/footer');
     }
     

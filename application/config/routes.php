@@ -60,17 +60,17 @@ $route['login'] = 'auth/login';
 $route['register'] = 'auth/register';
 $route['logout'] = 'auth/logout';
 
-// PLAYERS
-$route['p/(:any)'] = 'players/profile/$1';
-$route['lista-inscritos'] = 'players/active_list';
-$route['verificar'] = 'players/verify';
-$route['inscripcion'] = 'players/inscribe_today';
+// SUMMONERS
+$route['p/(:any)'] = 'summoners/profile/$1';
+$route['lista-inscritos'] = 'summoners/active_list';
+$route['verificar'] = 'summoners/verify';
+$route['inscripcion'] = 'summoners/inscribe_today';
 
 // ADMIN
-$route['admin/add-players'] = 'Players/add_players';
+$route['admin/add-summoners'] = 'summoners/add_summoners';
 
 // CRON
-$route['cron/players'] = 'cron/players';
+$route['cron/summoners'] = 'cron/summoners';
 
 // API
 $route['api/matchmaking/generate'] = 'api/matchmaking';

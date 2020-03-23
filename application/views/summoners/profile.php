@@ -5,16 +5,16 @@
                 <div class="card-body text-center">
                     <div class="row">
                         <div class="col-3">
-                            <img src="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/<?=$player_data->icon_id?>.png"
+                            <img src="https://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/<?=$summoner_data->icon_id?>.png"
                                 style="width: 10vw;height: 10vw; border-radius: 50%;" alt="icon">
-                            <h4 class="mt-2">Nivel: <a class="text-warning"><?=$player_data->level?></a></h4>
+                            <h4 class="mt-2">Nivel: <a class="text-warning"><?=$summoner_data->level?></a></h4>
                         </div>
                         <div class="col-3">
-                            <?php if ($player_data->league != "") { ?>
-                            <img src="/assets/img/ranked/<?=strtolower($player_data->league)?>.png"
+                            <?php if ($summoner_data->league != "") { ?>
+                            <img src="/assets/img/ranked/<?=strtolower($summoner_data->league)?>.png"
                                 style="width: 10vw;height: 10vw;">
                             <h4 class="mt-2"><a
-                                    class="text-warning"><?=$player_data->league." ".$player_data->rank?></a></h4>
+                                    class="text-warning"><?=$summoner_data->league." ".$summoner_data->rank?></a></h4>
                             <?php } else { ?>
                             <img src="https://cdn.mobalytics.gg/stable/season_9_tiers/unranked.png"
                                 style="width: 10vw;height: 10vw;">
@@ -25,21 +25,21 @@
                             <div class="row">
                                 <div class="col align-self-center">
                                     <h1><a class="text-info">
-                                            <?php if($player_data->loses == 0) { $result = "?";} else {$result = round($player_data->wins*100/($player_data->wins+$player_data->loses));}?>
+                                            <?php if($summoner_data->loses == 0) { $result = "?";} else {$result = round($summoner_data->wins*100/($summoner_data->wins+$summoner_data->loses));}?>
                                             <?=$result?> %
                                         </a></h1>
                                     <p>Winratio</p>
                                 </div>
                                 <div class="col align-self-center">
-                                    <h1><a class="text-success"><?=$player_data->wins?></a></h1>
+                                    <h1><a class="text-success"><?=$summoner_data->wins?></a></h1>
                                     <p>Ganadas</p>
                                 </div>
                                 <div class="col align-self-center">
-                                    <h1><a class="text-danger"><?=$player_data->loses?></a></h1>
+                                    <h1><a class="text-danger"><?=$summoner_data->loses?></a></h1>
                                     <p>Perdidas</p>
                                 </div>
                                 <div class="col align-self-center">
-                                    <h1><a class="text-warning"><?=$player_data->points?></a></h1>
+                                    <h1><a class="text-warning"><?=$summoner_data->points?></a></h1>
                                     <p>Puntos</p>
                                 </div>
                             </div>

@@ -11,11 +11,11 @@
                                 <div class="input-group-text"><i class="fas fa-user-check"></i></div>
                             </div>
                             <input type="text" class="form-control" name="summoner_name"
-                                value="<?=$player_data->summoner_name?>" disabled>
+                                value="<?=$summoner_data->summoner_name?>" disabled>
                             <input type="hidden" name="cacadelavaca" value="hola">
                         </div>
                     </div>
-                    <?php if (!$player_active) { ?>
+                    <?php if (!$summoner_active) { ?>
                     <button type="submit" class="btn btn-primary btn-lg btn-block mt-2" name="inscribe">
                         Inscribirme HOY
                     </button>

@@ -30,7 +30,7 @@ class Main extends CI_Controller {
 		checkAlert();
 		$is_logged_in = isLoggedIn();
 
-		$this->load->model('Players_model');
+		$this->load->model('Summoners_model');
 		if ($is_logged_in) {
 			$user_data = $this->Users_model->getUser($_COOKIE['token']);
 			$is_admin = isAdmin();
@@ -44,7 +44,7 @@ class Main extends CI_Controller {
 			'user_data' => $user_data,
 			'is_admin' => $is_admin,
 			'loggedIn' => $is_logged_in,
-			'players' => $this->Players_model->getPlayers()
+			'summoners' => $this->Summoners_model->getSummoners()
 		];
 
 		$this->load->view('templates/header', $data);

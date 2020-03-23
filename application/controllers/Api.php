@@ -23,12 +23,12 @@ class Api extends CI_Controller {
 			LeagueAPI::SET_CACHE_RATELIMIT  => true,
 			LeagueAPI::SET_CACHE_CALLS      => false,
         ]);
-		$this->load->model('Players_model');
+		$this->load->model('Summoners_model');
 	}
 	
 	public function matchmaking()
 	{
-		$players = $this->Players_model->getPlayers();
+		$summoners = $this->Summoners_model->getSummoners();
 
 		$mmr = [
 			'IRON' => [
@@ -73,50 +73,50 @@ class Api extends CI_Controller {
 		while (true) {
 			$medias = [];
 			$matchmaking = [];
-			$players_full = [];
+			$summoners_full = [];
 
-			foreach ($players as $player) {
-				if (!$this->check_same_day($player->active)) {
+			foreach ($summoners as $summoner) {
+				if (!$this->check_same_day($summoner->active)) {
 					continue;
 				}
-				$players_full[$player->id]['id'] = $player->id;
-				$players_full[$player->id]['summoner_name'] = $player->summoner_name;
-				$players_full[$player->id]['league'] = $player->league;
-				$players_full[$player->id]['rank'] = $player->rank;
-				if ($player->league != "") {
-					$player_mmr = $mmr[$player->league][$player->rank];
+				$summoners_full[$summoner->id]['id'] = $summoner->id;
+				$summoners_full[$summoner->id]['summoner_name'] = $summoner->summoner_name;
+				$summoners_full[$summoner->id]['league'] = $summoner->league;
+				$summoners_full[$summoner->id]['rank'] = $summoner->rank;
+				if ($summoner->league != "") {
+					$summoner_mmr = $mmr[$summoner->league][$summoner->rank];
 				} else {
-					$player_mmr = 800;
+					$summoner_mmr = 800;
 				}
-				if ($player->wins == 0 && $player->loses == 0) {
-					$player_elo = round($player_mmr/2300, 4);
+				if ($summoner->wins == 0 && $summoner->loses == 0) {
+					$summoner_elo = round($summoner_mmr/2300, 4);
 				} else {
-					$players_full[$player->id]['winrate'] = round($player->wins/($player->wins+$player->loses), 1);
-					$player_elo = round($players_full[$player->id]['winrate'] * 0.65 + $player_mmr/2300 * 0.35, 4);
+					$summoners_full[$summoner->id]['winrate'] = round($summoner->wins/($summoner->wins+$summoner->loses), 1);
+					$summoner_elo = round($summoners_full[$summoner->id]['winrate'] * 0.65 + $summoner_mmr/2300 * 0.35, 4);
 				}
 				$perturbacion = (mt_rand(0, 1000) / 10000);
 				if ((bool)random_int(0, 1)) {
-					$players_full[$player->id]['elo'] = round($player_elo + $perturbacion, 4);
+					$summoners_full[$summoner->id]['elo'] = round($summoner_elo + $perturbacion, 4);
 				} else {
-					$players_full[$player->id]['elo'] = round($player_elo - $perturbacion, 4);
+					$summoners_full[$summoner->id]['elo'] = round($summoner_elo - $perturbacion, 4);
 				}
 			}
 
-			usort($players_full, function($a, $b) {
+			usort($summoners_full, function($a, $b) {
 				return $a['elo'] <=> $b['elo'];
 			});
 			$direction = 1;
 			$suma = 0;
-			$n_teams = floor(count($players_full)/5);
+			$n_teams = floor(count($summoners_full)/5);
 			for($t=0; $t < $n_teams; $t++) {
 				for ($i=0; $i < 5; $i++) { 
 					if ($direction === 1) {
-						$player = array_pop($players_full);
+						$summoner = array_pop($summoners_full);
 					} else {
-						$player = array_shift($players_full);
+						$summoner = array_shift($summoners_full);
 					}
-					$matchmaking[$t][$i] = $player;
-					$suma += $player['elo'];
+					$matchmaking[$t][$i] = $summoner;
+					$suma += $summoner['elo'];
 					$direction = -$direction;
 				}
 				//$matchmaking[$t]['media'] = round($suma/5, 4);
@@ -131,8 +131,8 @@ class Api extends CI_Controller {
 		$n = 1;
 		foreach ($matchmaking as $team) {
 			echo('<h2>EQUIPO '.$n.'</h2><br>');
-			foreach ($team as $player) {
-				echo('- '.$player['summoner_name'].'<br>');
+			foreach ($team as $summoner) {
+				echo('- '.$summoner['summoner_name'].'<br>');
 			}
 			$n += 1;
 		}

@@ -24,15 +24,15 @@ class Cron extends CI_Controller {
 		]);
     }
 
-	public function players()
+	public function summoners()
 	{
-		$this->load->model('Players_model');
-		$players = $this->Players_model->getPlayers(10);
+		$this->load->model('Summoners_model');
+		$summoners = $this->Summoners_model->getSummoners(10);
 
-		foreach ($players as $player) {
+		foreach ($summoners as $summoner) {
 			try {
-				$summoner = $this->lol_api->getSummonerByName($player->summoner_name);
-				$leagues = $this->lol_api->getLeagueEntriesForSummoner($summoner->id);
+				$summoner_data = $this->lol_api->getSummonerByName($summoner->summoner_name);
+				$leagues = $this->lol_api->getLeagueEntriesForSummoner($summoner_data->id);
 				$ranked[0] = "";
 				$ranked[1] = "";
 				foreach ($leagues as $league) {
@@ -42,16 +42,16 @@ class Cron extends CI_Controller {
 					}
 				}
 
-				if ($player->summoner_id != "") {
-					$this->Players_model->updatePlayer($player->id, $summoner->profileIconId, $summoner->summonerLevel, $ranked[0], $ranked[1]);
+				if ($summoner->summoner_id != "") {
+					$this->Summoners_model->updateSummoner($summoner->id, $summoner_data->profileIconId, $summoner_data->summonerLevel, $ranked[0], $ranked[1]);
 				} else {
-					$this->Players_model->updatePlayerFull($player->id, $summoner->id, $summoner->accountId ,$summoner->profileIconId, $summoner->summonerLevel, $ranked[0], $ranked[1]);
+					$this->Summoners_model->updateSummonerFull($summoner->id, $summoner_data->id, $summoner_data->accountId, $summoner_data->profileIconId, $summoner_data->summonerLevel, $ranked[0], $ranked[1]);
 				}
 
-				$player_points = ($player->wins*3)+($player->loses);
-				$this->Players_model->updatePoints($player->id, $player_points);
+				$summoner_points = ($summoner->wins*3)+($summoner->loses);
+				$this->Summoners_model->updatePoints($summoner->id, $summoner_points);
 			} catch (Exception $e) {
-				echo 'caca: '.$player->summoner_name.'<br>';
+				echo 'caca: '.$summoner->summoner_name.'<br>';
 			}
 		}
 	}
