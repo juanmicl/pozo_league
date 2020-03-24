@@ -7,10 +7,10 @@ class Players_model extends CI_Model
         parent::__construct();
     }
 
-    public function getPlayer($id)
+    public function getPlayer($summoner_id)
     {
-        $sql = "SELECT players.*, summoners.summoner_name FROM `players` INNER JOIN summoners ON players.summoner_id = summoners.id  WHERE players.id = ?";
-        return $this->db->query($sql, [$id])->result();
+        $sql = "SELECT * FROM `players` WHERE summoner_id = ?";
+        return $this->db->query($sql, [$summoner_id])->result();
     }
 
     public function setPlayer($match_id, $summoner_id, $data)
@@ -20,15 +20,15 @@ class Players_model extends CI_Model
         return $this->db->insert_id();
     }
 
-    public function countsummoners()
+    public function getPuntuation($summoner_id)
     {
-        $sql = "SELECT COUNT(*) c FROM `summoners`";
-        return $this->db->query($sql)->row()->c;
+        $sql = "SELECT sum(if(win=true,0,1)) loses, sum(if(win=true,1,0)) wins FROM `players` WHERE summoner_id = ?";
+        return $this->db->query($sql, [$summoner_id])->result()[0];
     }
 
-    public function countSummoner($name)
+    public function countPlayer($name)
     {
-        $sql = "SELECT COUNT(*) c FROM `summoners` WHERE `summoner_name` = ?";
+        $sql = "SELECT COUNT(*) c FROM `players` WHERE `summoner_name` = ?";
         return $this->db->query($sql, [$name])->row()->c;
     }
 }

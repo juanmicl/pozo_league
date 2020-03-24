@@ -49,9 +49,9 @@ class Summoners_model extends CI_Model
         return $this->db->query($sql, [$summoner_id, $account_id, $icon_id, $level, $league, $rank, $id]);
     }
 
-    public function updatePoints($id, $points) {
-        $sql = "UPDATE `summoners` SET `points` = ? WHERE id = ?;";
-        return $this->db->query($sql, [$points, $id]);
+    public function updatePuntuation($id, $wins, $loses, $points) {
+        $sql = "UPDATE `summoners` SET `wins` = ?, loses = ?, points = ? WHERE id = ?;";
+        return $this->db->query($sql, [$wins, $loses, $points, $id]);
     }
 
     public function getActive($id)

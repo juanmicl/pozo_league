@@ -27,6 +27,7 @@ class Cron extends CI_Controller {
 	public function summoners()
 	{
 		$this->load->model('Summoners_model');
+		$this->load->model('Players_model');
 		$summoners = $this->Summoners_model->getSummoners(10);
 
 		foreach ($summoners as $summoner) {
@@ -48,8 +49,10 @@ class Cron extends CI_Controller {
 					$this->Summoners_model->updateSummonerFull($summoner->id, $summoner_data->id, $summoner_data->accountId, $summoner_data->profileIconId, $summoner_data->summonerLevel, $ranked[0], $ranked[1]);
 				}
 
-				$summoner_points = ($summoner->wins*3)+($summoner->loses);
-				$this->Summoners_model->updatePoints($summoner->id, $summoner_points);
+				$puntuation = $this->Players_model->getPuntuation($summoner->id);
+
+				$summoner_points = ($puntuation->wins*3)+($puntuation->loses);
+				$this->Summoners_model->updatePuntuation($summoner->id, $puntuation->wins, $puntuation->loses, $summoner_points);
 			} catch (Exception $e) {
 				echo 'caca: '.$summoner->summoner_name.'<br>';
 			}
