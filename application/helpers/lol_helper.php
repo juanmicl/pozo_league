@@ -305,7 +305,7 @@ if (!function_exists('getChampionIDToname'))
                 return "Hecarim";
                 break;
             case 121:
-                return "Kha'Zix";
+                return "Khazix";
                 break;
             case 122:
                 return "Darius";
@@ -350,7 +350,7 @@ if (!function_exists('getChampionIDToname'))
                 return "Yasuo";
                 break;
             case 161:
-                return "Vel'Koz";
+                return "Velkoz";
                 break;
             case 163:
                 return "Taliyah";
@@ -413,7 +413,7 @@ if (!function_exists('getChampionIDToname'))
                 return "Illaoi";
                 break;
             case 421:
-                return "Rek'Sai";
+                return "Reksai";
                 break;
             case 427:
                 return "Ivern";
