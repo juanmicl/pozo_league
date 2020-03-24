@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="card-body text-center">
-                    <div class="row">
+                    <div class="row justify-content-center">
                         <div class="col-sx-5">
                             <h5 class="text-success">Victoria</h5>
                             <?php foreach ($match['players'] as $player) { 
