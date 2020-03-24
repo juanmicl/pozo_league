@@ -24,19 +24,20 @@
                             if ($player['win'] == 1) {    
                             ?>
                             <div class="col text-right">
-                            <a class="text-dark text-decoration-none" href="/p/<?=$player['summoner_name']?>"><?=$player['summoner_name']?></a>
+                                <a class="text-dark text-decoration-none"
+                                    href="/p/<?=$player['summoner_name']?>"><?=$player['summoner_name']?></a>
                                 <img src="https://opgg-static.akamaized.net/images/lol/champion/<?=$player['champion_name']?>.png"
                                     style="width: 25px;height: 25px; border-radius: 50%;">
                             </div>
                             <?php } } ?>
                         </div>
                         <div class="col-2">
-                        <h5>VS</h5>
-                        <img src="/assets/img/positions/top.png" style="width: 25px;height: 25px;"><br>
-                        <img src="/assets/img/positions/mid.png" style="width: 25px;height: 25px;"><br>
-                        <img src="/assets/img/positions/jungle.png" style="width: 25px;height: 25px;"><br>
-                        <img src="/assets/img/positions/bot.png" style="width: 25px;height: 25px;"><br>
-                        <img src="/assets/img/positions/bot.png" style="width: 25px;height: 25px;">
+                            <h5>VS</h5>
+                            <img src="/assets/img/positions/top.png" style="width: 25px;height: 25px;"><br>
+                            <img src="/assets/img/positions/mid.png" style="width: 25px;height: 25px;"><br>
+                            <img src="/assets/img/positions/jungle.png" style="width: 25px;height: 25px;"><br>
+                            <img src="/assets/img/positions/bot.png" style="width: 25px;height: 25px;"><br>
+                            <img src="/assets/img/positions/bot.png" style="width: 25px;height: 25px;">
                         </div>
                         <div class="col-5">
                             <h5 class="text-danger">Derrota</h5>
@@ -46,7 +47,8 @@
                             <div class="col text-left">
                                 <img src="https://opgg-static.akamaized.net/images/lol/champion/<?=$player['champion_name']?>.png"
                                     style="width: 25px;height: 25px; border-radius: 50%;">
-                                <a class="text-dark text-decoration-none" href="/p/<?=$player['summoner_name']?>"><?=$player['summoner_name']?></a>
+                                <a class="text-dark text-decoration-none"
+                                    href="/p/<?=$player['summoner_name']?>"><?=$player['summoner_name']?></a>
                             </div>
                             <?php } } ?>
                         </div>
@@ -55,4 +57,21 @@
             </div>
         </div>
         <?php } ?>
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="/partidas/<?=$pagination_data['page']-1?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link"><?=$pagination_data['page']?></a></li>
+            <li class="page-item"><a class="page-link"
+                    href="/partidas/<?=$pagination_data['page']+1?>"><?=$pagination_data['page']+1?></a></li>
+            <li class="page-item"><a class="page-link"
+                    href="/partidas/<?=$pagination_data['page']+2?>"><?=$pagination_data['page']+2?></a></li>
+            <li class="page-item">
+                <a class="page-link" href="/partidas/<?=$pagination_data['page']+1?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
     </div>

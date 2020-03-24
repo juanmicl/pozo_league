@@ -10,7 +10,7 @@ class Matches extends CI_Controller {
 		$this->load->model('Users_model');
     }
 
-	public function matches()
+	public function matches($page = 1)
 	{
 		$this->load->model('Summoners_model');
 		$this->load->model('Matches_model');
@@ -26,9 +26,21 @@ class Matches extends CI_Controller {
 			$is_admin = false;
 		}
 
+		$n_matches = $this->Matches_model->countMatches();
+		$limit = 6*10; // items per page
+		$n_pages = ceil($n_matches/($limit/10));
+		if ($page < 1) {$page = 1; } elseif ($page > $n_pages) { $page = $n_pages; }
+		// Calculate the offset for the query
+		$offset = ($page - 1)  * $limit;
+
+		$pagination_data = [
+			'pages' => $n_pages,
+			'page' => $page
+		];
+
 		$matches_formatted = [];
 		$match_id = null;
-		$matches = $this->Matches_model->getMatches(40);
+		$matches = $this->Matches_model->getMatches($limit, $offset);
 		foreach ($matches as $match) {
 			if ($match_id == null || $match_id != $match->match_id) {
 				$matches_formatted[$match->match_id] = [
@@ -80,6 +92,7 @@ class Matches extends CI_Controller {
 		$data = [
 			'title' => 'Partidas',
 			'matches' => $matches_formatted,
+			'pagination_data' => $pagination_data,
 			'user_data' => $user_data,
 			'is_admin' => $is_admin,
 			'loggedIn' => $is_logged_in

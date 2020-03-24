@@ -9,8 +9,8 @@ class Matches_model extends CI_Model
 
     public function getMatches($limit = null, $offset = null)
     {
-        if ($limit != null && $offset = null) {
-            $sql = "SELECT matches.*, players.*, summoners.summoner_name FROM `matches` INNER JOIN players ON players.match_id = matches.id INNER JOIN summoners ON players.summoner_id = summoners.id ORDER BY matches.date, players.lane DESC LIMIT ? OFFSET ?";
+        if ($limit != null && $offset != null) {
+            $sql = "SELECT matches.*, players.*, summoners.summoner_name FROM `matches` INNER JOIN players ON players.match_id = matches.id INNER JOIN summoners ON players.summoner_id = summoners.id ORDER BY matches.date DESC, players.lane DESC LIMIT ? OFFSET ?";
             return $this->db->query($sql, [$limit, $offset])->result();
         } else if ($limit != null) {
             $sql = "SELECT matches.*, players.*, summoners.summoner_name FROM `matches` INNER JOIN players ON players.match_id = matches.id INNER JOIN summoners ON players.summoner_id = summoners.id ORDER BY matches.date DESC, players.lane DESC LIMIT ?";

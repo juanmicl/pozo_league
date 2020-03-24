@@ -35,7 +35,7 @@ if (!function_exists('getChampionIDToname'))
                 return "Kayle";
                 break;
             case 11:
-                return "Master Yi";
+                return "MasterYi";
                 break;
             case 12:
                 return "Alistar";
@@ -413,7 +413,7 @@ if (!function_exists('getChampionIDToname'))
                 return "Illaoi";
                 break;
             case 421:
-                return "Reksai";
+                return "RekSai";
                 break;
             case 427:
                 return "Ivern";

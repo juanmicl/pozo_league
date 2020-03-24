@@ -90,9 +90,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/lista-inscritos"><i class="fas fa-align-justify"></i> Lista Inscritos</a>
                     </li>
-                    <!--<li class="nav-item">
-                        <a class="nav-link" href="#"><i class="far fa-calendar-alt"></i> Jornadas</a>
-                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/partidas"><i class="far fa-calendar-alt"></i> Partidas</a>
+                    </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="busca un jugador">

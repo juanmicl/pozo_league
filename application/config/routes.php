@@ -68,6 +68,7 @@ $route['inscripcion'] = 'summoners/inscribe_today';
 
 // MATCHES
 $route['partidas'] = 'matches/matches';
+$route['partidas/(:num)'] = 'matches/matches/$1';
 
 // ADMIN
 $route['admin/add-summoners'] = 'summoners/add_summoners';
