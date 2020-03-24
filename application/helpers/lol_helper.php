@@ -176,7 +176,7 @@ if (!function_exists('getChampionIDToname'))
                 return "Orianna";
                 break;
             case 62:
-                return "Wukong";
+                return "MonkeyKing";
                 break;
             case 63:
                 return "Brand";
