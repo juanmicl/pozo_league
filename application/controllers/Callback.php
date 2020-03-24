@@ -33,11 +33,29 @@ class Callback extends CI_Controller {
         $match_id = $this->Matches_model->setMatch(
             $match_data->gameId, $match_data->gameDuration, $match_data->gameMode,
             $match_data->gameType, $match_data->gameVersion, $match_data->mapId,
-            [
-                $match_data->teams[0]->bans[0]->championId, $match_data->teams[0]->bans[1]->championId, $match_data->teams[0]->bans[2]->championId, $match_data->teams[0]->bans[3]->championId, $match_data->teams[0]->bans[4]->championId,
-                $match_data->teams[1]->bans[0]->championId, $match_data->teams[1]->bans[1]->championId, $match_data->teams[1]->bans[2]->championId, $match_data->teams[1]->bans[3]->championId, $match_data->teams[1]->bans[4]->championId
-            ],
             $match_data->gameCreationDate
+        );
+
+        $bans_t1 = [];
+        for ($i=0; $i < 5; $i++) {
+            if (!empty($match_data->teams[0]->bans[$i])){
+                array_push($bans_t1, $match_data->teams[0]->bans[$i]->championId);
+            } else {
+                array_push($bans_t1, null);
+            }
+        }
+
+        $bans_t2 = [];
+        for ($i=0; $i < 5; $i++) {
+            if (!empty($match_data->teams[1]->bans[$i])){
+                array_push($bans_t2, $match_data->teams[1]->bans[$i]->championId);
+            } else {
+                array_push($bans_t2, null);
+            } 
+        }
+
+        $this->Matches_model->updateBans(
+            $match_id, $bans_t1, $bans_t2
         );
 
         file_put_contents('./games/'.$match_data->gameId.'.json', json_encode($match_data));
