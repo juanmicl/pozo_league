@@ -28,8 +28,6 @@ class Api extends CI_Controller {
 	
 	public function matchmaking()
 	{
-		$summoners = $this->Summoners_model->getSummoners();
-
 		$mmr = [
 			'IRON' => [
 				'IV' => 0,
@@ -74,6 +72,8 @@ class Api extends CI_Controller {
 			$medias = [];
 			$matchmaking = [];
 			$summoners_full = [];
+
+			$summoners = $this->Summoners_model->getSummoners();
 
 			foreach ($summoners as $summoner) {
 				if (!$this->check_same_day($summoner->active)) {

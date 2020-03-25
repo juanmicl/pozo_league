@@ -75,6 +75,7 @@ $route['admin/add-summoners'] = 'summoners/add_summoners';
 
 // CRON
 $route['cron/summoners'] = 'cron/summoners';
+$route['cron/awards'] = 'cron/awards';
 
 // API
 $route['api/matchmaking/generate'] = 'api/matchmaking';

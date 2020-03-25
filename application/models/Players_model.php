@@ -26,6 +26,12 @@ class Players_model extends CI_Model
         return $this->db->query($sql, [$summoner_id])->result()[0];
     }
 
+    public function getTopStatsDesc($stat)
+    {
+        $sql = "SELECT * FROM `players` ORDER BY ".$stat." DESC LIMIT 1";
+        return $this->db->query($sql)->result()[0];
+    }
+
     public function countPlayer($name)
     {
         $sql = "SELECT COUNT(*) c FROM `players` WHERE `summoner_name` = ?";

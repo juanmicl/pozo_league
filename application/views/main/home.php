@@ -6,6 +6,7 @@
                 <th></th>
                 <th>SoloQ</th>
                 <th>Nombre</th>
+                <th></th>
                 <th>Victorias</th>
                 <th>Derrotas</th>
                 <th>Puntos</th>
@@ -34,6 +35,11 @@
                     <h4>
                         <a href="/p/<?=$summoner->summoner_name?>" class="text-decoration-none" style="color:#ffff !important;"><?=$summoner->summoner_name?></a>
                     </h4>
+                </td>
+                <td>
+                <?php if ($summoner->award_id != null) { ?>
+                        <h4><i class="<?=$summoner->fa_icon?>" title="<?=$summoner->name?>"></i></h4>
+                    <?php } ?>
                 </td>
                 <td>
                     <h4 class="text-success"><?=$summoner->wins?></h4>

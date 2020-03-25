@@ -44,7 +44,7 @@ class Main extends CI_Controller {
 			'user_data' => $user_data,
 			'is_admin' => $is_admin,
 			'loggedIn' => $is_logged_in,
-			'summoners' => $this->Summoners_model->getSummoners()
+			'summoners' => $this->Summoners_model->getSummonersAndAwards()
 		];
 
 		$this->load->view('templates/header', $data);

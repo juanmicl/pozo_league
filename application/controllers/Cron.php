@@ -58,4 +58,19 @@ class Cron extends CI_Controller {
 			}
 		}
 	}
+
+	public function awards()
+	{
+		$this->load->model('Awards_model');
+		$this->load->model('Players_model');
+		$awards = $this->Awards_model->getAwards();
+
+		foreach ($awards as $award) {
+			$top_stat = $this->Players_model->getTopStatsDesc($award->data);
+			if ($this->Awards_model->countSummonerAward($award->id) > 0) {
+				$this->Awards_model->delSummonerAwardByAwardId($award->id);
+			}
+			$this->Awards_model->setSummonerAward($top_stat->summoner_id, $award->id);
+		}		
+	}
 }

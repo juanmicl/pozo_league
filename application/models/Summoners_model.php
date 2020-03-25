@@ -20,6 +20,19 @@ class Summoners_model extends CI_Model
         }
     }
 
+    public function getSummonersAndAwards($limit = null, $offset = null)
+    {
+        if ($limit != null && $offset = null) {
+            $sql = "SELECT * FROM `summoners` ORDER BY points ASC LIMIT ? OFFSET ?";
+            return $this->db->query($sql, [$limit, $offset])->result();
+        } else if ($limit != null) {
+            $sql = "SELECT * FROM `summoners` ORDER BY checked ASC LIMIT ?";
+            return $this->db->query($sql, [$limit])->result();
+        } else {
+            return $this->db->query("SELECT * FROM `summoners` LEFT JOIN awards_given ON awards_given.summoner_id = summoners.id LEFT JOIN awards ON awards.id = awards_given.award_id GROUP BY summoners.summoner_name ORDER BY points DESC")->result();
+        }
+    }
+
     public function getSummoner($id)
     {
         $sql = "SELECT * FROM summoners WHERE id = ?";
