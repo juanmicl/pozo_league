@@ -30,7 +30,7 @@ class Matches extends CI_Controller {
 		$limit = 6*10; // items per page
 		$n_pages = ceil($n_matches/($limit/10));
 		if ($page < 1) {$page = 1; } elseif ($page > $n_pages) { $page = $n_pages; }
-		// Calculate the offset for the query
+		
 		$offset = ($page - 1)  * $limit;
 
 		$pagination_data = [
@@ -49,8 +49,7 @@ class Matches extends CI_Controller {
 						'game_duration' => $match->game_duration,
 						'game_version' => $match->game_version,
 						'bans' => [
-							$match->ban01_id,
-							$match->ban02_id, $match->ban03_id, $match->ban04_id, $match->ban05_id, $match->ban06_id, $match->ban07_id, $match->ban08_id, $match->ban09_id, $match->ban10_id
+							$match->ban01_id, $match->ban02_id, $match->ban03_id, $match->ban04_id, $match->ban05_id, $match->ban06_id, $match->ban07_id, $match->ban08_id, $match->ban09_id, $match->ban10_id
 						],
 						'date' => new DateTime($match->date)
 					],

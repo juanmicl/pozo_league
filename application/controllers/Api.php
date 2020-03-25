@@ -92,7 +92,7 @@ class Api extends CI_Controller {
 					$summoner_elo = round($summoner_mmr/2300, 4);
 				} else {
 					$summoners_full[$summoner->id]['winrate'] = round($summoner->wins/($summoner->wins+$summoner->loses), 1);
-					$summoner_elo = round($summoners_full[$summoner->id]['winrate'] * 0.65 + $summoner_mmr/2300 * 0.35, 4);
+					$summoner_elo = round($summoners_full[$summoner->id]['winrate'] * 0.50 + $summoner_mmr/2300 * 0.50, 4);
 				}
 				$perturbacion = (mt_rand(0, 1000) / 10000);
 				if ((bool)random_int(0, 1)) {
@@ -123,7 +123,7 @@ class Api extends CI_Controller {
 				array_push($medias, round($suma/5, 4));
 				$suma = 0;
 			}
-			if ((max($medias) - min($medias)) < 0.06) {
+			if ((max($medias) - min($medias)) < 0.05) {
 				break;
 			}
 		}

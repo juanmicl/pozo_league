@@ -20,6 +20,12 @@ class Matches_model extends CI_Model
         }
     }
 
+    public function getMatchesBySummoner($summoner_name, $limit)
+    {
+        $sql = "SELECT matches.*, players.*, summoners.summoner_name FROM `matches` INNER JOIN players ON players.match_id = matches.id INNER JOIN summoners ON players.summoner_id = summoners.id WHERE matches.game_id IN ( SELECT matches.game_id FROM matches INNER JOIN players ON players.match_id = matches.id INNER JOIN summoners ON players.summoner_id = summoners.id WHERE summoners.summoner_name = ?) ORDER BY matches.date DESC, players.lane DESC LIMIT ?";
+        return $this->db->query($sql, [$summoner_name, $limit])->result();
+    }
+
     public function getMatch($id)
     {
         $sql = "SELECT * FROM summoners WHERE id = ?";

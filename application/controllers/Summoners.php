@@ -157,7 +157,6 @@ class Summoners extends CI_Controller {
 
     public function active_list()
 	{
-        $this->load->model('Summoners_model');
         $is_logged_in = isLoggedIn();
 		if ($is_logged_in) {
 			$user_data = $this->Users_model->getUser($_COOKIE['token']);
@@ -196,9 +195,10 @@ class Summoners extends CI_Controller {
 		if ($this->Summoners_model->countSummoner($summoner_name) == 0) {
 			header('Location: /404');
             exit();
-		}
-
-        $summoner_data = $this->Summoners_model->getSummonerByName($summoner_name);
+        }
+        $this->load->model('Matches_model');
+        $this->load->helper('lol');
+        $summoner_data = $this->Summoners_model->getSummonerByName($summoner_name, 30);
         
         if (isLoggedIn()) {
 			$user_data = $this->Users_model->getUser($_COOKIE['token']);
@@ -206,12 +206,64 @@ class Summoners extends CI_Controller {
 		} else {
 			$user_data = null;
 			$is_admin = false;
+        }
+        
+        $matches_formatted = [];
+		$match_id = null;
+		$matches = $this->Matches_model->getMatchesBySummoner($summoner_name, 30);
+		foreach ($matches as $match) {
+			if ($match_id == null || $match_id != $match->match_id) {
+				$matches_formatted[$match->match_id] = [
+					'data' => [
+						'game_id' => $match->game_id,
+						'game_duration' => $match->game_duration,
+						'game_version' => $match->game_version,
+						'bans' => [
+							$match->ban01_id,
+							$match->ban02_id, $match->ban03_id, $match->ban04_id, $match->ban05_id, $match->ban06_id, $match->ban07_id, $match->ban08_id, $match->ban09_id, $match->ban10_id
+						],
+						'date' => new DateTime($match->date)
+					],
+					'players' => []
+				];
+				$match_id = $match->match_id;
+			} else {
+				$matches_formatted[$match->match_id] = [
+					'data' => [
+						'game_id' => $match->game_id,
+						'game_duration' => $match->game_duration,
+						'game_version' => $match->game_version,
+						'bans' => [
+							$match->ban01_id,
+							$match->ban02_id, $match->ban03_id, $match->ban04_id, $match->ban05_id, $match->ban06_id, $match->ban07_id, $match->ban08_id, $match->ban09_id, $match->ban10_id
+						],
+						'date' => new DateTime($match->date)
+					],
+					'players' => $matches_formatted[$match->match_id]['players']
+				];
+			}
+			array_push(
+				$matches_formatted[$match->match_id]['players'],
+				[
+					'summoner_id' => $match->summoner_id,
+					'summoner_name' => $match->summoner_name,
+					'champion_name' =>  getChampionIDToname($match->champion_id),
+					'lane' => $match->lane,
+					'win' => $match->win,
+					'kills' => $match->kills,
+					'deaths' => $match->deaths,
+					'assists' => $match->assists,
+					'first_blood' => $match->first_blood,
+					'penta_kills' => $match->penta_kills
+				]
+			);
 		}
 
 		$data = [
 			'title' => $summoner_name,
             'user_data' => $user_data,
             'summoner_data' => $summoner_data,
+            'matches' => $matches_formatted,
 			'is_admin' => $is_admin,
 			'loggedIn' => isLoggedIn()
         ];
