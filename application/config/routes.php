@@ -70,6 +70,10 @@ $route['inscripcion'] = 'summoners/inscribe_today';
 $route['partidas'] = 'matches/matches';
 $route['partidas/(:num)'] = 'matches/matches/$1';
 
+// STREAM
+$route['stream/ranking'] = 'stream/ranking';
+$route['stream/matches'] = 'stream/matches';
+
 // ADMIN
 $route['admin/add-summoners'] = 'summoners/add_summoners';
 
