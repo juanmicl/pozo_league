@@ -75,11 +75,10 @@
     </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navbarColor02"
-                aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigationbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="navigationbar">
                 <ul class="navbar-nav mr-auto">
                     <!--<li class="nav-item active">
                         <a class="nav-link" href="/"><i class="fas fa-tachometer-alt"></i> Dashboard <span class="sr-only">(current)</span></a>
