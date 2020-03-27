@@ -43,20 +43,8 @@
     <div class="row">
         <?php foreach($matches as $match) { ?>
         <div class="col-md-6 mb-3">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-3 text-left">
-                            <i class="far fa-calendar"></i> <?=$match['data']['date']->format('d/m/Y') ?>
-                        </div>
-                        <div class="col-3 text-left">
-                            <i class="far fa-clock"></i> <?=round($match['data']['game_duration']/60) ?> minutos
-                        </div>
-                        <div class="col-6 text-right">
-                            
-                        </div>
-                    </div>
-                </div>
+            <div class="card border-0 shadow-sm" style="background-color: rgba(0, 0, 0, 0.6);">
+
                 <div class="card-body text-center">
                     <div class="row justify-content-center">
                         <div class="col-sx-5">
@@ -65,8 +53,7 @@
                             if ($player['win'] == 1) {    
                             ?>
                             <div class="col text-right">
-                                <a class="text-dark text-decoration-none"
-                                    href="/p/<?=$player['summoner_name']?>"><?=$player['summoner_name']?></a>
+                                <?=$player['summoner_name']?>
                                 <img src="https://opgg-static.akamaized.net/images/lol/champion/<?=$player['champion_name']?>.png"
                                     style="width: 25px;height: 25px; border-radius: 50%;">
                             </div>
@@ -88,8 +75,7 @@
                             <div class="col text-left">
                                 <img src="https://opgg-static.akamaized.net/images/lol/champion/<?=$player['champion_name']?>.png"
                                     style="width: 25px;height: 25px; border-radius: 50%;">
-                                <a class="text-dark text-decoration-none"
-                                    href="/p/<?=$player['summoner_name']?>"><?=$player['summoner_name']?></a>
+                                <?=$player['summoner_name']?>
                             </div>
                             <?php } } ?>
                         </div>
@@ -98,28 +84,7 @@
             </div>
         </div>
         <?php } ?>
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" href="/partidas/<?=$pagination_data['page']-1?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link"><?=$pagination_data['page']?></a></li>
-            <li class="page-item"><a class="page-link"
-                    href="/partidas/<?=$pagination_data['page']+1?>"><?=$pagination_data['page']+1?></a></li>
-            <li class="page-item"><a class="page-link"
-                    href="/partidas/<?=$pagination_data['page']+2?>"><?=$pagination_data['page']+2?></a></li>
-            <li class="page-item">
-                <a class="page-link" href="/partidas/<?=$pagination_data['page']+1?>" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
     </div>
-
-    <footer class="mt-5 mb-3 text-muted text-center">
-    <p><a class="text-danger" href="https://discord.gg/VuZca5C" target="_blank"><i class="fab fa-discord"></i> Discord</a></p>
-</footer>
 <!-- SCRIPTS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
 </body>

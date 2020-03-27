@@ -77,7 +77,7 @@ class Stream extends CI_Controller {
 		}
 
 		$n_matches = $this->Matches_model->countMatches();
-		$limit = 6*10; // items per page
+		$limit = 4*10; // items per page
 		$n_pages = ceil($n_matches/($limit/10));
 		if ($page < 1) {$page = 1; } elseif ($page > $n_pages) { $page = $n_pages; }
 		
@@ -92,6 +92,7 @@ class Stream extends CI_Controller {
 		$match_id = null;
 		$matches = $this->Matches_model->getMatches($limit, $offset);
 		foreach ($matches as $match) {
+			$date = new DateTime($match->date);
 			if ($match_id == null || $match_id != $match->match_id) {
 				$matches_formatted[$match->match_id] = [
 					'data' => [
@@ -101,7 +102,7 @@ class Stream extends CI_Controller {
 						'bans' => [
 							$match->ban01_id, $match->ban02_id, $match->ban03_id, $match->ban04_id, $match->ban05_id, $match->ban06_id, $match->ban07_id, $match->ban08_id, $match->ban09_id, $match->ban10_id
 						],
-						'date' => new DateTime($match->date)
+						'date' => $date->modify('ago')
 					],
 					'players' => []
 				];
@@ -116,7 +117,7 @@ class Stream extends CI_Controller {
 							$match->ban01_id,
 							$match->ban02_id, $match->ban03_id, $match->ban04_id, $match->ban05_id, $match->ban06_id, $match->ban07_id, $match->ban08_id, $match->ban09_id, $match->ban10_id
 						],
-						'date' => new DateTime($match->date)
+						'date' => $date->modify('ago')
 					],
 					'players' => $matches_formatted[$match->match_id]['players']
 				];

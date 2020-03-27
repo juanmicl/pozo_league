@@ -67,6 +67,12 @@ class Summoners_model extends CI_Model
         return $this->db->query($sql, [$wins, $loses, $points, $id]);
     }
 
+    public function getMaxPoints()
+    {
+        $sql = "SELECT points FROM summoners ORDER BY points DESC LIMIT 1";
+        return $this->db->query($sql)->row()->points;
+    }
+
     public function getActive($id)
     {
         $sql = "SELECT active FROM summoners WHERE id = ?";

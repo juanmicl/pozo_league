@@ -74,6 +74,7 @@ class Api extends CI_Controller {
 			$summoners_full = [];
 
 			$summoners = $this->Summoners_model->getSummoners();
+			$summoners_max_points = $this->Summoners_model->getMaxPoints();
 
 			foreach ($summoners as $summoner) {
 				if (!$this->check_same_day($summoner->active)) {
@@ -83,6 +84,7 @@ class Api extends CI_Controller {
 				$summoners_full[$summoner->id]['summoner_name'] = $summoner->summoner_name;
 				$summoners_full[$summoner->id]['league'] = $summoner->league;
 				$summoners_full[$summoner->id]['rank'] = $summoner->rank;
+				$summoners_full[$summoner->id]['points'] = $summoner->points;
 				if ($summoner->league != "") {
 					$summoner_mmr = $mmr[$summoner->league][$summoner->rank];
 				} else {
@@ -92,7 +94,7 @@ class Api extends CI_Controller {
 					$summoner_elo = round($summoner_mmr/2300, 4);
 				} else {
 					$summoners_full[$summoner->id]['winrate'] = round($summoner->wins/($summoner->wins+$summoner->loses), 1);
-					$summoner_elo = round($summoners_full[$summoner->id]['winrate'] * 0.50 + $summoner_mmr/2300 * 0.50, 4);
+					$summoner_elo = round(($summoners_full[$summoner->id]['winrate'] * 0.30) + ($summoner_mmr/2300 * 0.30) + ($summoner->points/$summoners_max_points * 0.40), 4);
 				}
 				$perturbacion = (mt_rand(0, 1000) / 10000);
 				if ((bool)random_int(0, 1)) {
@@ -128,13 +130,21 @@ class Api extends CI_Controller {
 			}
 		}
 		//echo(json_encode($matchmaking, JSON_UNESCAPED_UNICODE));
+		$suma_p = 0;
+		$suma_w = 0;
 		$n = 1;
 		foreach ($matchmaking as $team) {
-			echo('<h2>EQUIPO '.$n.'</h2><br>');
+			echo('<h2>EQUIPO '.$n.'</h2>');
 			foreach ($team as $summoner) {
-				echo('- '.$summoner['summoner_name'].'<br>');
+				echo('- '.$summoner['summoner_name'].' | P <b>'.$summoner['points'].'</b> | WR <b>'.($summoner['winrate']*100).'%</b><br>');
+				$suma_p += $summoner['points'];
+				$suma_w += $summoner['winrate'];
 			}
 			$n += 1;
+			echo('<br>MEDIA P: <b>'.($suma_p/5).'</b> | ');
+			echo('MEDIA WR: <b>'.(($suma_w/5)*100).'%</b>');
+			$suma_p = 0;
+			$suma_w = 0;
 		}
 	}
 
