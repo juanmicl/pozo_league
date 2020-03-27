@@ -51,7 +51,7 @@ class Cron extends CI_Controller {
 
 				$puntuation = $this->Players_model->getPuntuation($summoner->id);
 
-				$summoner_points = ($puntuation->wins*3)+($puntuation->loses);
+				$summoner_points = $puntuation->wins*3;
 				$this->Summoners_model->updatePuntuation($summoner->id, $puntuation->wins, $puntuation->loses, $summoner_points);
 			} catch (Exception $e) {
 				echo 'caca: '.$summoner->summoner_name.'<br>';
